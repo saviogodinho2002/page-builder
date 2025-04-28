@@ -504,9 +504,7 @@ export default {
                   </div>
                 </div>
                 <div class="hero-image">
-                  <div class="image-placeholder">
-                    <div class="placeholder-text">Imagem Ilustrativa</div>
-                  </div>
+                  <img class="image-placeholder" />
                 </div>
               </div>
             `,
@@ -752,27 +750,21 @@ export default {
                 
                 <div class="cards-grid">
                   <div class="service-card">
-                    <div class="card-icon">
-                      <i class="fas fa-laptop-code"></i>
-                    </div>
+                    <img class="card-icon" />
                     <h3 class="card-title">Desenvolvimento Web</h3>
                     <p class="card-description">Sites e aplicações web modernas e responsivas que representam sua marca com excelência.</p>
                     <a href="#" class="card-link">Saiba mais <i class="fas fa-chevron-right"></i></a>
                   </div>
                   
                   <div class="service-card">
-                    <div class="card-icon">
-                      <i class="fas fa-mobile-alt"></i>
-                    </div>
+                    <img class="card-icon" />
                     <h3 class="card-title">Apps Mobile</h3>
                     <p class="card-description">Aplicativos nativos para iOS e Android que oferecem experiências excepcionais aos usuários.</p>
                     <a href="#" class="card-link">Saiba mais <i class="fas fa-chevron-right"></i></a>
                   </div>
                   
                   <div class="service-card">
-                    <div class="card-icon">
-                      <i class="fas fa-chart-line"></i>
-                    </div>
+                    <img class="card-icon" />
                     <h3 class="card-title">Marketing Digital</h3>
                     <p class="card-description">Estratégias personalizadas para aumentar sua visibilidade online e atrair mais clientes.</p>
                     <a href="#" class="card-link">Saiba mais <i class="fas fa-chevron-right"></i></a>
@@ -847,13 +839,9 @@ export default {
                 width: 60px;
                 height: 60px;
                 background-color: var(--primary-color, #3B82F6);
-                color: white;
                 border-radius: 12px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.5rem;
                 margin-bottom: 25px;
+                object-fit: cover;
               }
               
               .card-title {
@@ -941,6 +929,11 @@ export default {
             const sectionTitleEl = el.querySelector('.section-title');
             const sectionDescriptionEl = el.querySelector('.section-description');
             
+            // Referências para os ícones dos cards
+            const cardIcon1 = el.querySelector('.cards-grid .service-card:nth-child(1) .card-icon');
+            const cardIcon2 = el.querySelector('.cards-grid .service-card:nth-child(2) .card-icon');
+            const cardIcon3 = el.querySelector('.cards-grid .service-card:nth-child(3) .card-icon');
+            
             if (sectionTagEl && traits.sectionTag) {
               sectionTagEl.textContent = traits.sectionTag;
             }
@@ -953,6 +946,19 @@ export default {
               sectionDescriptionEl.textContent = traits.sectionDescription;
             }
             
+            // Atualizar imagens dos cards se fornecidas
+            if (cardIcon1 && traits.cardImage1) {
+              cardIcon1.src = traits.cardImage1;
+            }
+            
+            if (cardIcon2 && traits.cardImage2) {
+              cardIcon2.src = traits.cardImage2;
+            }
+            
+            if (cardIcon3 && traits.cardImage3) {
+              cardIcon3.src = traits.cardImage3;
+            }
+            
             // Atualizar estilos
             if (traits.backgroundColor) {
               el.style.setProperty('--background-color', traits.backgroundColor);
@@ -960,6 +966,19 @@ export default {
             
             if (traits.primaryColor) {
               el.style.setProperty('--primary-color', traits.primaryColor);
+              
+              // Aplicar cor primária aos ícones que não têm imagem
+              if (cardIcon1 && !traits.cardImage1) {
+                cardIcon1.style.backgroundColor = traits.primaryColor;
+              }
+              
+              if (cardIcon2 && !traits.cardImage2) {
+                cardIcon2.style.backgroundColor = traits.primaryColor;
+              }
+              
+              if (cardIcon3 && !traits.cardImage3) {
+                cardIcon3.style.backgroundColor = traits.primaryColor;
+              }
             }
             
             if (traits.textColor) {
@@ -979,13 +998,100 @@ export default {
             draggable: true,
             droppable: false,
             components: `
-              <div class="icon-container">
-                <i class="fas fa-star"></i>
-              </div>
+              <img class="icon-container" />
               <h3 class="feature-title">Título do Recurso</h3>
               <p class="feature-description">Descrição do recurso oferecido pelo seu serviço ou produto.</p>
               <a href="#" class="feature-button">Saiba mais</a>
-            `
+            `,
+            styles: `
+              .feature-card {
+                background-color: white;
+                border-radius: 8px;
+                padding: 30px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+                text-align: center;
+                transition: all 0.3s ease;
+              }
+              
+              .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+              }
+              
+              .icon-container {
+                width: 70px;
+                height: 70px;
+                background-color: var(--icon-color, #3B82F6);
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                object-fit: cover;
+              }
+              
+              .feature-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: var(--text-color, #1F2937);
+              }
+              
+              .feature-description {
+                color: #6B7280;
+                line-height: 1.6;
+                margin-bottom: 20px;
+              }
+              
+              .feature-button {
+                background-color: var(--primary-color, #3B82F6);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s;
+              }
+              
+              .feature-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 10px rgba(59, 130, 246, 0.3);
+              }
+            `,
+            traits: [
+              {
+                type: 'text',
+                name: 'title',
+                label: 'Título',
+              },
+              {
+                type: 'text',
+                name: 'description',
+                label: 'Descrição',
+              },
+              {
+                type: 'text',
+                name: 'buttonText',
+                label: 'Texto do Botão',
+              },
+              {
+                type: 'text',
+                name: 'buttonLink',
+                label: 'Link do Botão',
+              },
+              {
+                type: 'color',
+                name: 'iconColor',
+                label: 'Cor do Ícone',
+              },
+              {
+                type: 'color',
+                name: 'titleColor',
+                label: 'Cor do Título',
+              },
+              {
+                type: 'color',
+                name: 'descriptionColor',
+                label: 'Cor da Descrição',
+              },
+            ],
           },
         },
         view: {
@@ -1003,8 +1109,25 @@ export default {
             const descriptionEl = el.querySelector('.feature-description');
             const buttonEl = el.querySelector('.feature-button');
             
-            if (iconEl && traits.icon) {
-              iconEl.innerHTML = traits.icon;
+            if (iconEl) {
+              if (traits.featureImage) {
+                // Se temos uma imagem, atualizar o src
+                iconEl.src = traits.featureImage;
+                // Limpar estilo ou conteúdo HTML que pode ter sido adicionado pelo ícone
+                iconEl.innerHTML = '';
+                iconEl.style.display = '';
+                iconEl.style.alignItems = '';
+                iconEl.style.justifyContent = '';
+                iconEl.style.color = '';
+              } else if (traits.icon) {
+                // Se não temos imagem, usar ícone como fallback
+                iconEl.src = '';
+                iconEl.style.display = 'flex';
+                iconEl.style.alignItems = 'center';
+                iconEl.style.justifyContent = 'center';
+                iconEl.style.color = 'white';
+                iconEl.innerHTML = traits.icon;
+              }
             }
             
             if (titleEl && traits.title) {
@@ -1023,6 +1146,10 @@ export default {
             // Atualizar estilos
             if (traits.iconColor) {
               iconEl.style.setProperty('--icon-color', traits.iconColor);
+              // Aplicar cor de fundo ao ícone apenas se não tiver imagem
+              if (!traits.featureImage) {
+                iconEl.style.backgroundColor = traits.iconColor;
+              }
             }
             
             if (traits.titleColor) {
